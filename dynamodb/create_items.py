@@ -9,6 +9,9 @@ session_token_l = []
 users_l = []
 created_at_l = []
 expires_at_l = []
+# I added this extra column just to have a column with a number. It's useful when
+# testing the merge operation.
+some_number_l = []
 
 now = datetime.datetime.now()
 random.seed(10)
@@ -27,6 +30,8 @@ for u in user_subset:
     expires_at = created_at + datetime.timedelta(days=7)
     created_at_l.append(created_at)
     expires_at_l.append(expires_at)
+    some_number_l.append(random.randint(0, 100))
+  # END OF INNER LOOP
 
-df = pd.DataFrame({'SessionToken': session_token_l, 'Username': users_l, 'CreatedAt': created_at_l, 'ExpiresAt': expires_at_l})
+df = pd.DataFrame({'SessionToken': session_token_l, 'Username': users_l, 'CreatedAt': created_at_l, 'ExpiresAt': expires_at_l, 'SomeNumber': some_number_l})
 df.to_csv('items.csv', index=False)
