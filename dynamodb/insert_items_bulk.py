@@ -17,7 +17,11 @@ for idx, row in df.iterrows():
   item = row.to_dict()
   low_level_item = {}
   for key, val in item.items():
-    low_level_item[key] = {'S': val}
+    if key == 'SomeNumber':
+      low_level_item[key] = {'N': val}
+    else:
+      low_level_item[key] = {'S': val}
+  # END OF LOOP #
   req = {
     'PutRequest': {
       'Item': low_level_item
