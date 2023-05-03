@@ -2,18 +2,16 @@
 # 18 of "The DynamoDB Book". Here, we want to delete all session tokens of a specific user.
 
 import boto3
+from boto3.dynamodb.conditions import Attr
 import time
+import delete_config
 
 dynamodb = boto3.resource('dynamodb')
 table_name = 'SessionStore'
 table = dynamodb.Table(table_name)
 
-results = table.query(
-  TableName=table_name,
-  IndexName='UserIndex',
-  KeyConditionExpression="#username = :username",
-  ExpressionAttributeNames={"#username": "Username"},
-  ExpressionAttributeValues={":username": "adjutant" }
+results = table.scan(
+  FilterExpression=Attr('Username').eq(delete_config.user)
 )
 
 print(len(results['Items']))
